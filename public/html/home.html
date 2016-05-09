@@ -1,0 +1,41 @@
+
+<h1>Hello {{currentUser.username}}</h1>
+<br>
+<h3>You can view all user posts here. You can like or dislike posts</h3>
+<h3>Note: you can only make posts if you are logged in. There will be a "Make Post Button on the Navbar once you login."</h3>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th class='col-xs-1'>User</th>
+      <th class='col-xs-2'>Created At</th>
+      <th class='col-xs-6'>Post</th>
+      <th class='col-xs-1'>Likes</th>
+      <th class='col-xs-1' ng-show="currentUser">Like</th>
+      <!-- <th class='col-xs-1'>Dislike</th> -->
+    </tr>
+  </thead>
+  <tbody class='todoList'>
+    <tr ng-repeat='post in posts'>
+      <td class='user'>{{post.user}}</td>
+      <td class='createdAt'>{{post.createdAt | date}}</td>
+      <td class='post'>{{post.post}}</td>
+      <td class="vote">{{post.vote.positive.length}}</td>
+      <td>
+        <input class='isLiked'
+        type="checkbox"
+        ng-checked='post.isLiked'
+        ng-click='toggleLiked(post)'>
+      </td>
+      <!-- <td>
+        <input class='isDisLiked'
+        type="checkbox"
+        ng-checked='post.isDisLiked'
+        ng-click='toggleDisLiked(post)'>
+      </td> -->
+      <!-- <td>
+        <button type="button" class="btn btn-default btn-sm delete" ng-click='removePost(post)'>
+          <span class="glyphicon glyphicon-remove"></span>
+        </button>
+      </td> -->
+    </tr>
