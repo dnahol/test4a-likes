@@ -2,15 +2,17 @@
 
 var app = angular.module('authApp');
 
-app.controller('profileCtrl', function($scope, Auth){
+app.controller('profileCtrl', function($scope, Auth, $state) {
   console.log('profileCtrl!');
-  console.log(Auth.currentUser._id);
+  console.log(Auth.currentUser);
+  console.log('$scope.currentUser:', $scope.currentUser);
 
 
-  $scope.createPost = () => {
+  $scope.createPost = (post) => {
 
-    $scope.newPost.id = Auth.currentUser
-    console.log('$scope.currentUser.id:', $scope.currentUser.id);
+    
+
+    console.log('$scope.currentUser:', $scope.currentUser);
   }
 
 
@@ -21,7 +23,23 @@ app.controller('homeCtrl', function($scope, Auth, posts) {
   console.log('homeCtrl!');
   console.log(posts);
   $scope.posts = posts
-  $scope.toggleLiked = post => {
+
+  $scope.isLiked = post => {
+    return post.vote.positive.indexOf($scope.currentUser._id)
+  }
+
+
+  $scope.toggleLiked = (post) => {
+    console.log(post);
+    console.log($scope.isLiked(post));
+
+    if( $scope.isLiked(post) < 0 ) {
+      Auth.likePost(post._id, $scope.currentUser._id);
+      location.reload();
+    } else {
+      Auth.disLikePost(post._id, $scope.currentUser._id);
+      location.reload();
+    }
 
   }
 })

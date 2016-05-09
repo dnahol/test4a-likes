@@ -17,7 +17,7 @@ if(!JWT_SECRET) {
 
 var postSchema = new mongoose.Schema({
   post: { type: String, required: true },
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'user', required: true }
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 },
 {
   timestamps: true
@@ -42,6 +42,28 @@ postSchema.statics.like = function(postId, userId, cb) {
     });
   });
 };
+
+
+
+postSchema.statics.dislike = function(postId, userId, cb) {
+  console.log('postId: ', postId);
+  console.log('userId: ', userId);
+  Post.findById(postId, (err1, post) => {
+    User.findById(userId, (err2, user) => {
+       if(err1 || err2) return cb(err1 || err2);
+
+       console.log('post: ', post);
+
+      post.downvote(user, function(err, doc) {
+        assert.equal(doc, post);  // true
+        doc.downvote(user);      // true
+        cb(err);
+      })
+    });
+  });
+};
+
+
 
 // postSchema.statics.like = function(userId, postId, cb) {
 //

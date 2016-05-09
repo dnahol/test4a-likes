@@ -8,7 +8,10 @@ var assert = require('assert');
 
 router.route('/')
 .get((req, res) => {
-  Post.find({}, (err, posts) => {
+  Post
+  .find({})
+  .populate('user')
+  .exec((err, posts) => {
     res.status(err ? 400 : 200).send(err || posts);
   });
 })
@@ -23,6 +26,14 @@ router.route('/:postId/upvote/:userId')
 .post((req, res) => {
 
   Post.like(req.params.postId, req.params.userId, res.handle);
+
+});
+
+
+router.route('/:postId/downvote/:userId')
+.post((req, res) => {
+
+  Post.dislike(req.params.postId, req.params.userId, res.handle);
 
 });
 

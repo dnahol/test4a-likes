@@ -1,8 +1,8 @@
 
 <h1>Hello {{currentUser.username}}</h1>
 <br>
-<h3>You can view all user posts here. You can like or dislike posts</h3>
-<h3>Note: you can only make posts if you are logged in. There will be a "Make Post Button on the Navbar once you login."</h3>
+<h3>You can view all user posts here.</h3>
+<h3>Note: you can only make posts or like posts if you are logged in. There will be a "Make Post Button on the Navbar once you login."</h3>
 
 <table class="table">
   <thead>
@@ -17,15 +17,17 @@
   </thead>
   <tbody class='todoList'>
     <tr ng-repeat='post in posts'>
-      <td class='user'>{{post.user}}</td>
-      <td class='createdAt'>{{post.createdAt | date}}</td>
+      <td class='user'>{{post.user.username}}</td>
+      <td class='createdAt'>{{post.createdAt}}</td>
       <td class='post'>{{post.post}}</td>
-      <td class="vote">{{post.vote.positive.length}}</td>
-      <td>
+      <td class="likes">{{post.vote.positive.length}}</td>
+      <td ng-show="currentUser">
         <input class='isLiked'
         type="checkbox"
-        ng-checked='post.isLiked'
+        ng-init= 'isLiked(post)'
+        ng-checked='isLiked(post)>=0'
         ng-click='toggleLiked(post)'>
+        {{isLiked(post)}}
       </td>
       <!-- <td>
         <input class='isDisLiked'

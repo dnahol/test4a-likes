@@ -4,6 +4,14 @@ var app = angular.module('authApp');
 
 app.service('Auth', function($http, $q) {
 
+  this.likePost = (postId, userId) => {
+    return $http.post(`/api/posts/${postId}/upvote/${userId}`)
+  }
+
+  this.disLikePost = (postId, userId) => {
+    return $http.post(`/api/posts/${postId}/downvote/${userId}`)
+  }
+
 
   this.makePost = (post) => {
     return $http.post('/api/posts', post)
